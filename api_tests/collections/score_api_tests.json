@@ -1,0 +1,65 @@
+{
+	"info": {
+		"_postman_id": "e979ddd6-2ca7-4b65-9352-c4d3c5154939",
+		"name": "RiskIQ - Score API Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16098897"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Score is between 300 and 850\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.risk_score).to.be.within(300, 850);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Summary exists\", function () {\r",
+							"    const jsonData = pm.response.json();\r",
+							"    pm.expect(jsonData.summary).to.be.a(\"string\");\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"loan_type\": \"auto\",\r\n  \"name\": \"John Trust\",\r\n  \"dob\": \"1990-01-01\",\r\n  \"ssn\": \"123-45-6789\",\r\n  \"zip\": \"92101\",\r\n  \"income\": 72000\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://host.docker.internal:8000/score",
+					"protocol": "http",
+					"host": [
+						"host",
+						"docker",
+						"internal"
+					],
+					"port": "8000",
+					"path": [
+						"score"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
