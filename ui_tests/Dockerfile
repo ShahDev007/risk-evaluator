@@ -15,11 +15,11 @@ ENV CHROME_BIN=/usr/bin/chromium \
     PYTHONUNBUFFERED=1
 
 # Install Python deps
-COPY ui_tests/requirements.txt /app/requirements.txt
+COPY requirements.txt /app/requirements.txt
 WORKDIR /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy tests
-COPY ui_tests /app
+COPY . /app
 
 CMD ["pytest", "test_dashboard.py"]

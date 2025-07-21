@@ -30,14 +30,15 @@ services:
       - backend
 
   selenium-runner:
-  build: ./ui_tests
-  depends_on:
-    - frontend
-  environment:
-    - CHROME_BIN=/usr/bin/chromium
-    - CHROMEDRIVER=/usr/bin/chromedriver
-  volumes:
-    - ./ui_tests:/app
-  working_dir: /app
-  command: pytest test_dashboard.py --maxfail=1 --disable-warnings --tb=short
+    build:
+      context: ./ui_tests
+    depends_on:
+      - frontend
+    environment:
+      - CHROME_BIN=/usr/bin/chromium
+      - CHROMEDRIVER=/usr/bin/chromedriver
+    volumes:
+      - ./ui_tests:/app
+    working_dir: /app
+    command: pytest test_dashboard.py --maxfail=1 --disable-warnings --tb=short
 
