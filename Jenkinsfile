@@ -51,8 +51,8 @@ pipeline {
         dir("${env.WORKSPACE}"){
         sh """
            docker run --rm \
-           -v $PWD/api_tests/collections:/etc/newman \
-           -v $PWD/reports:/etc/newman/reports \
+           -v $(pwd)/api_tests/collections:/etc/newman \
+           -v $(pwd)/reports:/etc/newman/reports \
            postman/newman:alpine run /etc/newman/score_api_tests.json --reporters cli
            """
 
