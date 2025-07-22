@@ -24,7 +24,7 @@ services:
    image: postman/newman:alpine
    volumes:
      - ${WORKSPACE}/api_tests/collections:/etc/newman
-     - ${WORKSPCAE}/reports:/etc/newman/reports
+     - ${WORKSPACE}/reports:/etc/newman/reports
    working_dir: /etc/newman
    command: run "score_api_tests.json" --reporters cli
    depends_on:
