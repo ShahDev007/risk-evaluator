@@ -49,6 +49,7 @@ pipeline {
     stage('Run API Tests (Newman)') {
   steps {
     script {
+      sh 'mkdir -p reports'
       def collectionPath = sh(script: "realpath api_tests/collections", returnStdout: true).trim()
       def reportPath = sh(script: "realpath reports", returnStdout: true).trim()
 
