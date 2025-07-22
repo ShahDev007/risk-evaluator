@@ -47,18 +47,21 @@ pipeline {
 
 
     stage('Run API Tests (Newman)') {
-      steps {
-        dir("${env.WORKSPACE}"){
-        sh '''
-           docker run --rm \
-           -v $(pwd)/api_tests/collections:/etc/newman \
-           -v $(pwd)/reports:/etc/newman/reports \
-           postman/newman:alpine run "/etc/newman/score_api_tests.json" --reporters cli
-           '''
+  steps {
+    script {
+      def collectionPath = sh(script: "realpath api_tests/collections", returnStdout: true).trim()
+      def reportPath = sh(script: "realpath reports", returnStdout: true).trim()
 
-       }
-     }
+      sh """
+        docker run --rm \
+          -v ${collectionPath}:/etc/newman \
+          -v ${reportPath}:/etc/newman/reports \
+          postman/newman:alpine run /etc/newman/score_api_tests.json --reporters cli
+      """
     }
+  }
+}
+
 
     stage('Run UI Tests (Selenium)') {
       steps {
