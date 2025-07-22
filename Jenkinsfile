@@ -27,13 +27,19 @@ pipeline {
       }
     }
 
+    stage('Prepare Newman Reports Folder') {
+      steps {
+        sh 'mkdir -p reports'
+      }
+    }
+
     stage('Debug workspace') {
-  steps {
-    dir("${env.WORKSPACE}") {
-      sh 'echo "[DEBUG] Listing workspace..."'
-      sh 'ls -R'
-      sh 'ls -R api_tests/collections || echo "[ERROR] Missing api_tests/collections directory"'
-      sh 'ls -l api_tests/collections/score_api_tests.json || echo "[ERROR] File not found: score_api_tests.json"'
+      steps {
+        dir("${env.WORKSPACE}") {
+         sh 'echo "[DEBUG] Listing workspace..."'
+         sh 'ls -R'
+         sh 'ls -R api_tests/collections || echo "[ERROR] Missing api_tests/collections directory"'
+         sh 'ls -l api_tests/collections/score_api_tests.json || echo "[ERROR] File not found: score_api_tests.json"'
     }
   }
 }
