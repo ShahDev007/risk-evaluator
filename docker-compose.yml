@@ -22,14 +22,14 @@ services:
 
   newman-runner:
    image: postman/newman:alpine
-   working_dir: /etc/newman
    volumes:
      - ./api_tests/collections:/etc/newman
      - ./reports:/etc/newman/reports
+   working_dir: /etc/newman
    command: run "score_api_tests.json" --reporters cli
    depends_on:
      - backend
-  
+
   selenium-runner:
     build:
       context: ./ui_tests
