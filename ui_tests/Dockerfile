@@ -1,25 +1,21 @@
-# File: ui_tests/Dockerfile
-FROM python:3.10-slim
+# ui_tests/Dockerfile
+FROM selenium/standalone-chrome:latest
 
-# Install required packages
-RUN apt-get update && apt-get install -y \
-    chromium-driver \
-    chromium \
-    wget \
-    unzip \
-    && rm -rf /var/lib/apt/lists/*
+USER root
 
-# Set environment vars for Selenium
-ENV CHROME_BIN=/usr/bin/chromium \
-    CHROMEDRIVER=/usr/bin/chromedriver \
-    PYTHONUNBUFFERED=1
+# Set environment vars (optional)
+ENV PYTHONUNBUFFERED=1
 
-# Install Python deps
+# Install Python & pip
+RUN apt-get update && apt-get install -y python3 python3-pip
+
+# Copy and install Python dependencies
 COPY requirements.txt /app/requirements.txt
 WORKDIR /app
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip3 install --no-cache-dir -r requirements.txt
 
-# Copy tests
+# Copy test files
 COPY . /app
 
+# Run pytest test suite (modify test file name if needed)
 CMD ["pytest", "test_dashboard.py"]

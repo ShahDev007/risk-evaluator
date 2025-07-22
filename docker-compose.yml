@@ -23,8 +23,8 @@ services:
   newman-runner:
    image: postman/newman:alpine
    volumes:
-     - ${WORKSPACE}/api_tests/collections:/etc/newman
-     - ${WORKSPACE}/reports:/etc/newman/reports
+     - ./api_tests/collections:/etc/newman
+     - ./reports:/etc/newman/reports
    working_dir: /etc/newman
    command: run "score_api_tests.json" --reporters cli
    depends_on:
@@ -35,6 +35,7 @@ services:
       context: ./ui_tests
     depends_on:
       - frontend
+      - backend
     environment:
       - CHROME_BIN=/usr/bin/chromium
       - CHROMEDRIVER=/usr/bin/chromedriver
@@ -43,4 +44,21 @@ services:
     working_dir: /app
     command: pytest test_dashboard.py --maxfail=1 --disable-warnings --tb=short
 
-  
+  jenkins:
+    image: jenkins/jenkins:lts
+    container_name: jenkins
+    user: root
+    ports:
+      - "8080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /usr/local/bin/docker:/usr/local/bin/docker
+      - /usr/local/bin/docker-compose:/usr/local/bin/docker-compose
+    restart: unless-stopped
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
+
+volumes:
+  jenkins_home:
