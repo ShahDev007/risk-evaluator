@@ -50,10 +50,10 @@ pipeline {
       steps {
         dir("${env.WORKSPACE}"){
         sh """
-           docker-compose run --rm \
-           -v ${env.WORKSPACE}/api_tests/collections:/etc/newman \
-           -v ${env.WORKSPACE}/reports:/etc/newman/reports \
-           newman-runner run /etc/newman/score_api_tests.json --reporters cli
+           docker run --rm \
+           -v $PWD/api_tests/collections:/etc/newman \
+           -v $PWD/reports:/etc/newman/reports \
+           postman/newman:alpine run /etc/newman/score_api_tests.json --reporters cli
            """
 
        }
