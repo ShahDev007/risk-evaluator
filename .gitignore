@@ -1,0 +1,26 @@
+# NodeJS
+node_modules/
+build/
+dist/
+.cache/
+
+# Python
+__pycache__/
+*.pyc
+
+# Reports
+reports/
+
+# Postman
+*.postman_environment.json
+*.postman_collection.json
+
+# Logs and test outputs
+*.log
+*.out
+
+# OS & editor junk
+.DS_Store
+.env
+.idea/
+.vscode/
