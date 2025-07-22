@@ -27,10 +27,24 @@ pipeline {
       }
     }
 
+    stage('Debug workspace') {
+  steps {
+    dir("${env.WORKSPACE}") {
+      sh 'echo "[DEBUG] Listing workspace..."'
+      sh 'ls -R'
+      sh 'ls -R api_tests/collections || echo "[ERROR] Missing api_tests/collections directory"'
+      sh 'ls -l api_tests/collections/score_api_tests.json || echo "[ERROR] File not found: score_api_tests.json"'
+    }
+  }
+}
+
+
     stage('Run API Tests (Newman)') {
       steps {
+        dir("${env.WORKSPACE}"){
         sh 'docker-compose run --rm newman-runner'
       }
+     }
     }
 
     stage('Run UI Tests (Selenium)') {

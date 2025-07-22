@@ -23,10 +23,10 @@ services:
   newman-runner:
     image: postman/newman:alpine
     volumes:
-      - ./api_tests/collections:/etc/newman
-      - ./reports:/etc/newman/reports
+      - ${PWD}/api_tests/collections:/etc/newman
+      - ${PWD}/reports:/etc/newman/reports
     working_dir: /etc/newman
-    command: run "/etc/newman/score_api_tests.json" --reporters cli
+    command: run "score_api_tests.json" --reporters cli
     depends_on:
       - backend
 
