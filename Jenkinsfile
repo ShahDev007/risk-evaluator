@@ -49,7 +49,7 @@ pipeline {
     stage('Run API Tests (Newman)') {
       steps {
         dir("${env.WORKSPACE}"){
-        sh 'docker-compose run --rm -v ${WORKSPACE_DIR}/api_tests/collections:/etc/newman -v ${WORKSPACE_DIR}/reports:/etc/newman/reports newman-runner'
+        sh 'docker-compose -f docker-compose.yml run --rm newman-runner'
       }
      }
     }
