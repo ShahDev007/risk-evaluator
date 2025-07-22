@@ -53,7 +53,7 @@ pipeline {
            docker run --rm \
            -v $(pwd)/api_tests/collections:/etc/newman \
            -v $(pwd)/reports:/etc/newman/reports \
-           postman/newman:alpine run /etc/newman/score_api_tests.json --reporters cli
+           postman/newman:alpine run "/etc/newman/score_api_tests.json" --reporters cli
            '''
 
        }
