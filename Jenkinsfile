@@ -4,7 +4,8 @@ pipeline {
   environment {
     DOCKER_BUILDKIT = 1
     COMPOSE_DOCKER_CLI_BUILD = 1
-  }
+    WORKSPACE_DIR = "${env.WORKSPACE}" 
+ }
 
   stages {
 
@@ -48,7 +49,7 @@ pipeline {
     stage('Run API Tests (Newman)') {
       steps {
         dir("${env.WORKSPACE}"){
-        sh 'docker-compose run --rm newman-runner'
+        sh 'docker-compose run --rm -v ${WORKSPACE_DIR}/api_tests/collections:/etc/newman -v ${WORKSPACE_DIR}/reports:/etc/newman/reports newman-runner'
       }
      }
     }
